@@ -12,6 +12,7 @@ class Supplier {
     private $latlng;
     private $currency_code;
     private $timezone;
+	private $cancellation_policies;
 
     /** @var Tour[] $tours  */
     private $tours = array();
@@ -231,6 +232,24 @@ class Supplier {
         $this->tours[] = $tour;
     }
 
+	/**
+	 * @return mixed
+	 */
+	public function get_cancellation_policies()
+	{
+		return $this->cancellation_policies;
+	}
+
+	/**
+	 * @param mixed $cancellation_policies
+	 */
+	public function set_cancellation_policies($cancellation_policies)
+	{
+		$this->cancellation_policies = $cancellation_policies;
+	}
+    
+    
+
     public static function fromRaw($raw_supplier) {
         $supplier = new Supplier();
 
@@ -245,6 +264,7 @@ class Supplier {
         $supplier->set_latlng(property_exists($raw_supplier, 'latlng') ? $raw_supplier->latlng : "");
 	    $supplier->set_currency_code(property_exists($raw_supplier, 'currency_code') ? $raw_supplier->currency_code : "");
 	    $supplier->set_timezone(property_exists($raw_supplier, 'timezone') ? $raw_supplier->timezone : date_default_timezone_get());
+	    $supplier->set_cancellation_policies(property_exists($raw_supplier, 'cancellation_policies') ? $raw_supplier->cancellation_policies : array());
 
         if(property_exists($raw_supplier, 'locations') && is_array($raw_supplier->locations)) {
             foreach($raw_supplier->locations as $raw_location) {
